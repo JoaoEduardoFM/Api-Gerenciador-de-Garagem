@@ -38,8 +38,8 @@
 2) Edição de registro.
 3) Deletar registro.
 4) Busca um registro pela placa do veículo.
-5) Busca veículo por marca e modelo.
-6) Busca um registro pela marca do veículo.
+5) Busca registro por marca e modelo.
+6) Busca registro pela marca do veículo.
 7) Busca todos os registros cadastrados.
 8) Adicionado o validation. Validando campos diretamente pela Entity.
 9) Controle de entrada e saida de veículo.
