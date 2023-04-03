@@ -37,7 +37,7 @@
 1) Cadastro de veículos.
 2) Edição de registro.
 3) Deletar registro.
-4) Busca um registro pela placa do veículo.
+4) Busca registro pela placa do veículo.
 5) Busca registro por marca e modelo.
 6) Busca registro pela marca do veículo.
 7) Busca todos os registros cadastrados.
