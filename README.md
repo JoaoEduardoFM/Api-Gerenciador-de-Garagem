@@ -28,7 +28,7 @@
   <tr>
     <td>11</td>
     <td>2.5.3</td>
-    <td>Database</td>
+    <td>h2</td>
   </tr>
 </table>
 
