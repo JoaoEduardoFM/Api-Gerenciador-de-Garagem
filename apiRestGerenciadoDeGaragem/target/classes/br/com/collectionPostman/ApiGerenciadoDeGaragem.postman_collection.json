@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "4b3f9807-3f1e-4152-9098-532a54eef05c",
+		"name": "ApiGerenciadoDeGaragem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18622684"
+	},
+	"item": [
+		{
+			"name": "busca veiculos cadastrados.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastra veiculo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"marca\": \"CB300\",\r\n    \"modelo\": \"X13\",\r\n    \"placa\": \"22532323\",\r\n    \"ano\": \"2011\",\r\n    \"checkInOut\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/garagem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualiza cadastro veiculo.",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"marca\": \"BMW\",\r\n        \"modelo\": \"X36\",\r\n        \"placa\": \"12562323\",\r\n        \"ano\": \"2011\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/garagem/atualizaPorId/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"atualizaPorId",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "busca veiculo por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem/buscaPorID/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"buscaPorID",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "busca veiculo por placa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem/buscaPorPlaca?placa=22532323",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"buscaPorPlaca"
+					],
+					"query": [
+						{
+							"key": "placa",
+							"value": "22532323"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "busca veiculo por marca.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem/buscaMarcas?marca=BMW",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"buscaMarcas"
+					],
+					"query": [
+						{
+							"key": "marca",
+							"value": "BMW"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checkin garagem",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem/check/verificaCheckin?checkInOut=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"check",
+						"verificaCheckin"
+					],
+					"query": [
+						{
+							"key": "checkInOut",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "busca veiculo por modelo.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/garagem/buscaMarcaModelo?marca=CB300&modelo=X13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"buscaMarcaModelo"
+					],
+					"query": [
+						{
+							"key": "marca",
+							"value": "CB300"
+						},
+						{
+							"key": "modelo",
+							"value": "X13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Entrada e saida garagem",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"checkInOut\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/garagem/check/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"garagem",
+						"check",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
