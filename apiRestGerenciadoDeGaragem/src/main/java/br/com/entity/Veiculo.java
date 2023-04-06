@@ -38,6 +38,5 @@ public class Veiculo {
 	@NotNull(message = "O campo ano deve ser informado")
 	private String ano;
 		
-	@NotNull(message = "O campo referente ao Tipo de conta do checkInOut, deve ser preenchido com true (Check-in) ou false (Check-out)")
 	private Boolean checkInOut;
 }

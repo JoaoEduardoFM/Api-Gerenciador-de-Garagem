@@ -1,16 +1,12 @@
 package br.com.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.entity.Veiculo;
 import br.com.repository.VeiculoRepository;
-import br.com.response.ResponseRest;
 import br.com.service.VeiculoService;
 import lombok.AllArgsConstructor;
 
@@ -97,18 +91,4 @@ public class VeiculoController {
 		carroRepository.deleteById(id);
 		
 	}
-	
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> MethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-		ResponseRest response = new ResponseRest();
-		List<String> erros = ex.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage)
-				.collect(Collectors.toList());	
-		
-		for (String listaErro : erros) {
-			response.setMessage(listaErro);
-		}
-
-		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 }
