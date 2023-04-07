@@ -1,6 +1,7 @@
 package br.com.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,18 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.entity.Veiculo;
 import br.com.repository.VeiculoRepository;
+import br.com.response.ResponseRest;
+import br.com.response.ResponseRest.messageType;
 import br.com.service.VeiculoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @AllArgsConstructor
@@ -36,25 +37,56 @@ public class VeiculoController {
 	
 	
 	// cadastra um novo registro
-	@PostMapping
-	@ResponseBody 
+	@PostMapping 
 	@ApiOperation (
       value = "Cadastra um veículo.",
       notes = "Cadastra um veículo vinculado a um cliente ."
     )
-	public ResponseEntity<Veiculo> salvaRegistroVeiculo(@RequestBody @Valid Veiculo veiculo) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(carroRepository.save(veiculo));
+	public ResponseEntity<?> salvaRegistroVeiculo(@Valid Veiculo veiculo, @ApiIgnore ResponseRest response) {
+		if(validaSeExisteId(veiculo.getId())){
+			response.setMessage("Id já cadastrado.");
+	    	response.setType(messageType.ATENCAO);
+	    	return new ResponseEntity<ResponseRest>(response,HttpStatus.BAD_REQUEST);
+			
+		}
+		;
+		return ResponseEntity.status(HttpStatus.OK).body(carroRepository.save(veiculo));
 	}
 	
 	// atualiza registro pelo ID de um veiculo cadastrado.
 	@PutMapping("atualizaPorId/{id}")
-	@ResponseBody 
 	@ApiOperation (
       value = "Atualiza cadastro de um veículo.",
       notes = "Atualiza de um veículo vinculado a um cliente ."
     )
-	public ResponseEntity<Veiculo> atualizaRegistroVeiculo(@PathVariable Long id, @RequestBody @Valid Veiculo veiculo) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(serviceCarro.updatePorId(id, veiculo));
+	public ResponseEntity<?> atualizaRegistroVeiculo(@Valid Veiculo veiculo, @ApiIgnore ResponseRest response) {
+		if(!validaSeExisteId(veiculo.getId()) || veiculo.getId() == null){
+			response.setMessage("Id não existente.");
+	    	response.setType(messageType.ATENCAO);
+	    	return new ResponseEntity<ResponseRest>(response,HttpStatus.BAD_REQUEST);
+			
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(serviceCarro.updatePorId(veiculo.getId(), veiculo));	
+	}
+	
+	// deleta registro do banco de dados
+	@DeleteMapping("deletaVeiculo/{id}")
+	@ApiOperation (
+      value = "Deleta registro.",
+      notes = "Deleta registro de veículos cadastrados."
+    )
+	public ResponseEntity<ResponseRest> deletaCarro(@PathVariable Long id, @ApiIgnore ResponseRest response) {
+		if(!validaSeExisteId(id)){
+			response.setMessage("Id não existente.");
+	    	response.setType(messageType.ATENCAO);
+	    	return new ResponseEntity<ResponseRest>(response,HttpStatus.BAD_REQUEST);
+			
+		}
+		carroRepository.deleteById(id);
+		response.setMessage("Registro excluído com sucesso.");
+    	response.setType(messageType.SUCESSO);
+    	return new ResponseEntity<ResponseRest>(response,HttpStatus.OK);
+		
 	}
 	
 	// busca um registro especifico pelo ID
@@ -63,7 +95,13 @@ public class VeiculoController {
       value = "Busca por ID.",
       notes = "Busca cadastro de um veículo vinculado a um cliente ."
     )
-	public ResponseEntity<Veiculo> buscaPorID(@PathVariable Long id){
+	public ResponseEntity<?> buscaPorID(@PathVariable Long id, @ApiIgnore ResponseRest response){
+		if(!validaSeExisteId(id)){
+			response.setMessage("Id não existente.");
+	    	response.setType(messageType.ATENCAO);	    	
+	    	return new ResponseEntity<ResponseRest>(response,HttpStatus.BAD_REQUEST);
+	    	}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(serviceCarro.findById(id));	
 	}
 	
@@ -73,19 +111,19 @@ public class VeiculoController {
       value = "Busca por placa.",
       notes = "Busca cadastro de um veículo baseado na placa."
     )
-	public List<Veiculo> listaPelaPlaca(@RequestParam (name = "placa", required = true) String placa){
+	public List<Veiculo> listaPelaPlaca(String placa){
 		List<Veiculo> buscaPlaca = serviceCarro.findByPlaca(placa);
 		return buscaPlaca;
 		
 	}
 	
 	// busca veiculo por marca e modelo 
-	@GetMapping("buscaMarcaModelo/{marca&modelo}")
+	@GetMapping("buscaMarca&Modelo/{marca&modelo}")
 	@ApiOperation (
       value = "Busca por marca e modelo.",
       notes = "Busca cadastro de um veículo baseado na merca e modelo."
     )
-	public List<Veiculo> listaVeiculo(@RequestParam ( required = true) String marca,String modelo){
+	public List<Veiculo> listaVeiculo(String marca,String modelo){
 		List<Veiculo> buscaVeiculo = carroRepository.findByMarcaAndModelo(marca, modelo);
 		return buscaVeiculo;
 		
@@ -97,32 +135,32 @@ public class VeiculoController {
       value = "Busca por marca.",
       notes = "Busca cadastro de um veículo baseado na merca."
     )
-	public List<Veiculo> listaPelaMarca(@RequestParam (name = "marca", required = true) String marca){
+	public List<Veiculo> listaPelaMarca(String marca){
 		List<Veiculo> buscaMarca = serviceCarro.findByMarca(marca);
 		return buscaMarca;
 		
 	}
 	
 	// busca todos os registros de todos os carros.
-	@GetMapping
+	@GetMapping("buscaVeiculos")
 	@ApiOperation (
       value = "Busca por veículos cadastrados.",
-      notes = "Busca cadastro de um veículo baseado na merca."
+      notes = "Busca cadastro de um veículo baseado na marca."
     )
 	public List<Veiculo> listaTodosCarros(){
 		return carroRepository.findAll();	
 		
 	}
 	
-	// deleta registro do banco de dados
-	@DeleteMapping("/{id}")
-	@ResponseBody 
-	@ApiOperation (
-      value = "Deleta registro.",
-      notes = "Deleta registro de veículos cadastrados."
-    )
-	public void deletaCarro(@PathVariable Long id) {
-		carroRepository.deleteById(id);
-		
+	public Boolean validaSeExisteId(Long id) {
+		Optional<Veiculo> buscaPorID = carroRepository.findById(id);
+		try {
+		if(buscaPorID.get().getId() != null) {
+	     return true;
+		}
+		}catch(Exception e) {
+		return false;
+		}
+		return false;
 	}
 }
