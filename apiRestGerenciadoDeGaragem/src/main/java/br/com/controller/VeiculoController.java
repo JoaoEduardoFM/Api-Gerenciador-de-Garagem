@@ -87,8 +87,6 @@ public class VeiculoController {
     )
 	public List<Veiculo> listaVeiculo(@RequestParam ( required = true) String marca,String modelo){
 		List<Veiculo> buscaVeiculo = carroRepository.findByMarcaAndModelo(marca, modelo);
-		if(buscaVeiculo.isEmpty() || buscaVeiculo == null) {
-		}
 		return buscaVeiculo;
 		
 	}
