@@ -18,7 +18,7 @@ public class Application {
 
 	public static void main(String[] args) {		  
 		SpringApplication.run(Application.class, args);
-		 System.out.println(" {Bem-vindo à nossa API de gerenciamento de garagem.! \n "
+		 System.err.println(" {Bem-vindo à nossa API de gerenciamento de garagem.! \n "
 			   		+ "Para acessar as funcionalidades acesse o swagger no seguinte link. \n "
 			   		+ "http://localhost:8080/swagger-ui.html#/}");
 	}
