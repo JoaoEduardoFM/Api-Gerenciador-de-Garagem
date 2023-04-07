@@ -40,6 +40,7 @@ public class Veiculo {
 	@ApiModelProperty(value = "Ano veículo", required = true)
 	private String ano;
 		
-	@ApiModelProperty(value = "Controle fluxo na garagem. true (Check-in) ou false (Check-out)", required = false)
+	@NotNull(message = "O campo checkInOut deve ser informado")
+	@ApiModelProperty(value = "Controle fluxo na garagem. true (Check-in) ou false (Check-out)", required = true)
 	private Boolean checkInOut;
 }
