@@ -48,3 +48,4 @@
 ## ## Esses recursos estão em desenvolvimento:
 
 - Cadastro de clientes.
+- Adicionar autenticação.
