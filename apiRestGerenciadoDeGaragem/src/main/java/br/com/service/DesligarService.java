@@ -19,12 +19,14 @@ public class DesligarService {
 
 	public ResponseEntity<ResponseRest> shutdown() {
 		ResponseRest response = new ResponseRest();
-		response.setMessage("Aplicação desligada com sucesso.");
-		response.setType(messageType.SUCESSO);
 		TaskExecutor taskExecutor = new SimpleAsyncTaskExecutor();
+
 		taskExecutor.execute(() -> {
+			response.setMessage("Aplicação desligada com sucesso.");
+			response.setType(messageType.SUCESSO);
 			context.close();
 			System.exit(0);
+
 		});
 		return new ResponseEntity<ResponseRest>(response, HttpStatus.BAD_REQUEST);
 	}

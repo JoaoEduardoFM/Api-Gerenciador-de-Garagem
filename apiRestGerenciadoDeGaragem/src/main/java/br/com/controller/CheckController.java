@@ -3,11 +3,13 @@ package br.com.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.model.entity.Veiculo;
@@ -35,6 +37,7 @@ public class CheckController {
 	@ApiOperation(
 			value = "efetua a entrada e saida de veiculo.", 
 			notes = "Controle fluxo na garagem. true (Check-in) ou false (Check-out).")
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<ResponseRest> AlteraCheck(@PathVariable("id") Long id, Boolean checkInOut,
 			@ApiIgnore Veiculo veiculo, @ApiIgnore ResponseRest response) {
 		return checkService.AlteraCheck(id, checkInOut, veiculo, response);
@@ -44,6 +47,7 @@ public class CheckController {
 	@ApiOperation(
 			value = "Busca veiculos em (Check-in) ou (Check-out).", 
 			notes = "Busca controle de fluxo na garagem. true (Check-in) ou false (Check-out).")
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Veiculo>> listaCheckInOut(Boolean checkIn) {
 		return checkService.listaCheckInOut(checkIn);
 	}
