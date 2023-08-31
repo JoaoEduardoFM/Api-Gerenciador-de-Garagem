@@ -33,7 +33,6 @@ public class VeiculoController {
 
 	VeiculoService serviceCarro;
 
-	// cadastra um novo registro
 	@PostMapping
 	@ApiOperation(
 			value = "Cadastra um veículo.", 
@@ -42,7 +41,6 @@ public class VeiculoController {
 		return serviceCarro.salvaRegistroVeiculo(veiculo, response);
 	}
 
-	// atualiza registro pelo ID de um veiculo cadastrado.
 	@PutMapping("atualizaPorId/{id}")
 	@ApiOperation(
 			value = "Atualiza cadastro de um veículo.", 
@@ -51,7 +49,6 @@ public class VeiculoController {
 		return serviceCarro.atualizaRegistroVeiculo(veiculo, response);
 	}
 
-	// deleta registro do banco de dados
 	@DeleteMapping("deletaVeiculo/{id}")
 	@ApiOperation(
 			value = "Deleta registro.", 
@@ -60,7 +57,6 @@ public class VeiculoController {
 		return serviceCarro.deletaVeiculo(id, response);
 	}
 
-	// busca um registro especifico pelo ID
 	@GetMapping("buscaPorID/{id}")
 	@ApiOperation(
 			value = "Busca por ID.", 
@@ -69,7 +65,6 @@ public class VeiculoController {
 		return serviceCarro.buscaPorID(id, response);
 	}
 
-	// busca um registro pela placa do veiculo
 	@GetMapping("buscaPorPlaca/{placa}")
 	@ApiOperation(
 			value = "Busca por placa.", 
@@ -78,7 +73,6 @@ public class VeiculoController {
 		return serviceCarro.findByPlaca(placa);
 	}
 
-	// busca veiculo por marca e modelo
 	@GetMapping("buscaMarca&Modelo/{marca&modelo}")
 	@ApiOperation(
 			value = "Busca por marca e modelo.", 
@@ -87,7 +81,6 @@ public class VeiculoController {
 		return serviceCarro.findByMarcaModelo(marca, modelo);
 	}
 
-	// busca um registro pela marca do veiculo
 	@GetMapping("buscaMarcas/{marca}")
 	@ApiOperation(
 			value = "Busca por marca.", 
@@ -96,7 +89,6 @@ public class VeiculoController {
 		return serviceCarro.findByMarca(marca);
 	}
 
-	// busca todos os registros de todos os carros.
 	@GetMapping("buscaVeiculos")
 	@ApiOperation(
 			value = "Busca por veículos cadastrados.", 
