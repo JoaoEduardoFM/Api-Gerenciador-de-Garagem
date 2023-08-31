@@ -1,22 +1,28 @@
 package br.com.util;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.entity.Veiculo;
+import br.com.model.entity.Veiculo;
+import br.com.repository.VeiculoRepository;
 import br.com.service.VeiculoService;
 
 public class VerificaCampos {
-	
+
 	@Autowired
 	VeiculoService serviceCarro;
-	
-	public Boolean verificaId(Long id, Veiculo veiculo){
+
+	@Autowired
+	VeiculoRepository repository;
+
+	public Boolean verificaId(Long id) {
 		try {
-			Veiculo veiculoCadastrado = serviceCarro.findById(id);
-		if( veiculoCadastrado.getId() != null) {
-			return true;
-		}
-		}catch(Exception e) {
+			Optional<Veiculo> veiculoCadastrado = repository.findById(id);
+			if (veiculoCadastrado.get().getId() != null) {
+				return true;
+			}
+		} catch (Exception e) {
 			return false;
 		}
 		return false;
