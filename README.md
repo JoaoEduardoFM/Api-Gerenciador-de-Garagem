@@ -34,18 +34,10 @@
 
 ## Desenvolvimento concluído.
 
-1) Cadastro de veículos.
+1) Cadastro de usuários.
 2) Edição de registro.
 3) Deletar registro.
-4) Busca registro pela placa do veículo.
-5) Busca registro por marca e modelo.
-6) Busca registro pela marca do veículo.
-7) Busca todos os registros cadastrados.
-8) Adicionado o validation. Validando campos diretamente pela Entity.
-9) Controle de entrada e saida de veículo.
-10) Busca veículo em Check-in ou Check-out.  
+4) Busca registro por id.
 
 ## ## Esses recursos estão em desenvolvimento:
 
-- Cadastro de clientes.
-- Adicionar autenticação.
