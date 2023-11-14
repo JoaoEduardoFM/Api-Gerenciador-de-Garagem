@@ -1,4 +1,8 @@
 package br.com.config.swagger;
+import static java.util.Collections.singletonList;
+
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -6,7 +10,11 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -21,6 +29,9 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("br.com.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .securitySchemes(singletonList(new ApiKey("Bearer", "Authorization", "header")))
+                .securityContexts(singletonList(securityContext()))
+                .enableUrlTemplating(true)
                 .apiInfo(apiInfo());
     }
 
@@ -34,5 +45,20 @@ public class SwaggerConfig {
                 		+ "Além disso, você pode fazer check-in e check-out de veículos. Isso ajudará você a rastrear quem esta ou não na garagem.")
                 .version("1.0.0")
                 .build();
+    }
+    
+    private SecurityContext securityContext(){
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return singletonList(new SecurityReference("Bearer", authorizationScopes));
     }
 }

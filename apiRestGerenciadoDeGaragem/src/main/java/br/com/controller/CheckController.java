@@ -24,7 +24,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @AllArgsConstructor
 @RequestMapping("garagem/check")
-@Api(tags = { "Entrada e saida de veiculo" })
+@Api(value = "Entrada e saída de veiculos", tags = "Entrada e saída de veículos")
 public class CheckController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class CheckController {
 
 	@PatchMapping("/entradaSaida/{id}")
 	@ApiOperation(
-			value = "efetua a entrada e saida de veiculo.", 
+			value = "efetua a entrada e saída de veículo.", 
 			notes = "Controle fluxo na garagem. true (Check-in) ou false (Check-out).")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<ResponseRest> AlteraCheck(@PathVariable("id") Long id, Boolean checkInOut,
@@ -45,7 +45,7 @@ public class CheckController {
 
 	@GetMapping("/verificaCheckin/{checkInOut}")
 	@ApiOperation(
-			value = "Busca veiculos em (Check-in) ou (Check-out).", 
+			value = "Busca veículo em (Check-in) ou (Check-out).", 
 			notes = "Busca controle de fluxo na garagem. true (Check-in) ou false (Check-out).")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Veiculo>> listaCheckInOut(Boolean checkIn) {
